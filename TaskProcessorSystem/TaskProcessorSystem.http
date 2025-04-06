@@ -1,0 +1,6 @@
+@TaskProcessorSystem_HostAddress = http://localhost:5114
+
+GET {{TaskProcessorSystem_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
