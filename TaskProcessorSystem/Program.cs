@@ -1,25 +1,30 @@
+using TaskProcessorSystem.Data;
+using Microsoft.EntityFrameworkCore;
+using TaskProcessorSystem.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Add SQLite DB context
+builder.Services.AddDbContext<JobDbContext>(options =>
+    options.UseSqlite("Data Source=jobs.db")); //This connect to SQLite DB
 
+// Add hosted background job processor
+builder.Services.AddHostedService<JobProcessorService>();
+
+// Add controllers and Swagger
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Middleware
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
-
-app.UseAuthorization();
-
-app.MapControllers();
-
-app.Run();
+app.UseAuthorization();  // Authorization middleware
+app.MapControllers();    // Map controllers to endpoints
+app.Run();               // Run the application
