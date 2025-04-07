@@ -33,7 +33,7 @@ namespace TaskProcessorSystem.Services
 
                     try
                     {
-                        await Task.Delay(2000); // Simulate execution
+                        await Task.Delay(2000);
 
                         job.Status = JobStatus.Completed;
                         job.CompletedAt = DateTime.UtcNow;
@@ -48,7 +48,7 @@ namespace TaskProcessorSystem.Services
                     await db.SaveChangesAsync();
                 }
 
-                await Task.Delay(1000); // Wait before next polling
+                await Task.Delay(1000);
             }
         }
     }

@@ -1,0 +1,9 @@
+<form (ngSubmit)="submitJob()">
+  <label>Type:</label>
+  <input [(ngModel)]="job.type" name="type" required />
+
+  <label>Payload (JSON):</label>
+  <textarea [(ngModel)]="job.payloadJson" name="payloadJson" required></textarea>
+
+  <button type="submit">Submit Job</button>
+</form>
