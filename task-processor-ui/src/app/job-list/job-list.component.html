@@ -1,12 +1,12 @@
-<h2>Job Statuses</h2>
-<table>
+<h2>Job List</h2>
+<table border="1" cellpadding="5">
   <tr>
     <th>ID</th>
     <th>Type</th>
     <th>Status</th>
     <th>Retries</th>
-    <th>Created At</th>
-    <th>Completed At</th>
+    <th>Created</th>
+    <th>Completed</th>
   </tr>
   <tr *ngFor="let job of jobs">
     <td>{{ job.id }}</td>
@@ -14,6 +14,6 @@
     <td>{{ job.status }}</td>
     <td>{{ job.retryCount }}</td>
     <td>{{ job.createdAt }}</td>
-    <td>{{ job.completedAt }}</td>
+    <td>{{ job.completedAt || '—' }}</td>
   </tr>
 </table>

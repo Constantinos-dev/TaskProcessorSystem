@@ -1,22 +1,26 @@
 import { Component } from '@angular/core';
-import { JobService, Job } from '../job.service';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-job-submit',
-  templateUrl: './job-submit.component.html'
+  templateUrl: './job-submit.component.html',
 })
 export class JobSubmitComponent {
-  job: Job = {
-    type: '',
-    payloadJson: ''
-  };
+  jobType: string = '';
+  payloadJson: string = '';
 
-  constructor(private jobService: JobService) { }
+  constructor(private http: HttpClient) { }
 
   submitJob() {
-    this.jobService.submitJob(this.job).subscribe({
-      next: res => alert('Job submitted successfully!'),
-      error: err => alert('Error submitting job.')
+    const job = {
+      type: this.jobType,
+      payloadJson: this.payloadJson,
+    };
+
+    this.http.post('/api/jobs', job).subscribe(() => {
+      alert('Job submitted successfully');
+      this.jobType = '';
+      this.payloadJson = '';
     });
   }
 }
