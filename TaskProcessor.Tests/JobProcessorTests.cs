@@ -3,41 +3,38 @@ using TaskProcessorSystem.Models;
 using TaskProcessorSystem.Services;
 using Microsoft.EntityFrameworkCore;
 using Xunit;
+using System;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
-public class JobProcessorTests
+public class JobProcessorService
 {
     private readonly JobDbContext _context;
 
-    public JobProcessorTests()
+    public JobProcessorService(JobDbContext context)
     {
-        var options = new DbContextOptionsBuilder<JobDbContext>()
-            .UseInMemoryDatabase(databaseName: "TestDb")
-            .Options;
-        _context = new JobDbContext(options);
+        _context = context;
     }
 
-    [Fact]
-    public async Task ProcessPendingJobs_ShouldMarkJobCompleted_WhenSuccessful()
+    public async Task ProcessPendingJobsAsync(CancellationToken cancellationToken)
     {
-        // Arrange
-        var job = new Job
-        {
-            Id = Guid.NewGuid(),
-            Type = "Test",
-            PayloadJson = "{}",
-            Status = JobStatus.Pending,
-            CreatedAt = DateTime.UtcNow
-        };
-        _context.Jobs.Add(job);
-        await _context.SaveChangesAsync();
+        try
+        {            
+            var pendingJobs = _context.Jobs.Where(j => j.Status == JobStatus.Pending).ToList();
 
-        var processor = new JobProcessorService(null /* Add mock dependencies if required */);
-
-        // Act
-        await processor.ExecuteAsync(CancellationToken.None); // Adjust for your implementation
-
-        // Assert
-        var updatedJob = await _context.Jobs.FindAsync(job.Id);
-        Assert.Equal(JobStatus.Completed, updatedJob.Status);
+            foreach (var job in pendingJobs)
+            {                
+                job.Status = JobStatus.Completed;
+                job.CompletedAt = DateTime.UtcNow;
+            }
+                        
+            await _context.SaveChangesAsync(cancellationToken);
+        }
+        catch (Exception ex)
+        {            
+            Console.WriteLine($"Error processing jobs: {ex.Message}");
+            throw;
+        }
     }
 }

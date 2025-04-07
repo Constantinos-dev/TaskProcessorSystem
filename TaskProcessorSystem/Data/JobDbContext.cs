@@ -7,6 +7,6 @@ namespace TaskProcessorSystem.Data
     {
         public JobDbContext(DbContextOptions<JobDbContext> options) : base(options) { }
 
-        public DbSet<Job> Jobs { get; set; }  // EF will create a Jobs table
+        public DbSet<Job> Jobs { get; set; }
     }
 }
