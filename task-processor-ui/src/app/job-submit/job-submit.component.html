@@ -1,10 +1,10 @@
 <h2>Submit Job</h2>
 <form (ngSubmit)="submitJob()">
   <label>Type:</label><br />
-  <input [(ngModel)]="jobType" name="type" required /><br /><br />
+  <input [(ngModel)]="jobType" name="jobType" required /><br /><br />
 
   <label>Payload (JSON):</label><br />
-  <textarea [(ngModel)]="payloadJson" name="payloadJson" rows="4" cols="50" required></textarea><br /><br />
+  <textarea [(ngModel)]="payload" name="payload" rows="5" cols="40" required></textarea><br /><br />
 
   <button type="submit">Submit</button>
 </form>
