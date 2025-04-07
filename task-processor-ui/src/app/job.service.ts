@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import { throwError } from 'rxjs';
 
 export interface Job {
   id?: string;
@@ -17,15 +19,20 @@ export interface Job {
   providedIn: 'root'
 })
 export class JobService {
-  private apiUrl = 'http://localhost:4200/api/jobs';
+  private baseUrl = 'https://localhost:4200/api/jobs';
 
   constructor(private http: HttpClient) { }
 
   submitJob(job: Job): Observable<Job> {
-    return this.http.post<Job>(this.apiUrl, job);
+    return this.http.post<Job>(this.baseUrl, job);
   }
 
-  getJobs(): Observable<Job[]> {
-    return this.http.get<Job[]>(this.apiUrl);
+  getJobs() {
+    return this.http.get(this.baseUrl).pipe(
+      catchError(error => {
+        console.error('Error fetching jobs:', error);
+        return throwError('An error occurred while retrieving jobs. Please try again later.');
+      })
+    );
   }
 }

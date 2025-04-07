@@ -28,12 +28,12 @@ namespace TaskProcessorSystem.Controllers
             }
             catch (DbUpdateException dbEx)
             {
-                
+                Console.WriteLine($"Database error: {dbEx.Message}");
                 return StatusCode(500, "A database error occurred while creating the job.");
             }
             catch (Exception ex)
             {
-                
+                Console.WriteLine($"Unexpected Error: {ex.Message}");
                 return StatusCode(500, "An unexpected error occurred while creating the job.");
             }
         }
@@ -48,7 +48,7 @@ namespace TaskProcessorSystem.Controllers
             }
             catch (Exception ex)
             {
-                
+                Console.WriteLine($"Unexpected Error: {ex.Message}");
                 return StatusCode(500, "An error occurred while retrieving jobs.");
             }
         }
@@ -66,7 +66,7 @@ namespace TaskProcessorSystem.Controllers
             }
             catch (Exception ex)
             {
-                
+                Console.WriteLine($"Unexpected Error: {ex.Message}");
                 return StatusCode(500, "An error occurred while retrieving the job.");
             }
         }

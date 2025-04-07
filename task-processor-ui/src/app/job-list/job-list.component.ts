@@ -11,6 +11,14 @@ export class JobListComponent implements OnInit {
   constructor(private jobService: JobService) { }
 
   ngOnInit() {
-    this.jobService.getJobs().subscribe(data => this.jobs = data);
+    this.jobService.getJobs().subscribe(
+      data => {
+        this.jobs = data as any[];
+      },
+      error => {
+        console.error(error);
+        alert(error); // Display error message
+      }
+    );
   }
 }
