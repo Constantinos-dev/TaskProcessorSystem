@@ -1,29 +1,26 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-
-interface Job {
-  id: string;
-  type: string;
-  payloadJson: string;
-  status: string;
-  retryCount: number;
-  createdAt: string;
-  completedAt: string | null;
-  errorMessage: string | null;
-}
+import { CommonModule, DatePipe } from '@angular/common';
+import { JobService, Job } from '../services/job.service';
 
 @Component({
   selector: 'app-job-list',
   templateUrl: './job-list.component.html',
+  standalone: true,
+  imports: [CommonModule, DatePipe]
 })
 export class JobListComponent implements OnInit {
   jobs: Job[] = [];
 
-  constructor(private http: HttpClient) { }
+  constructor(private jobService: JobService) { }
 
   ngOnInit(): void {
-    this.http.get<Job[]>('/api/jobs').subscribe((data) => {
-      this.jobs = data;
+    this.jobService.getJobs().subscribe({
+      next: (data: any) => {
+        this.jobs = data as Job[];
+      },
+      error: (error) => {
+        console.error('Error fetching jobs:', error);
+      }
     });
   }
 }

@@ -6,6 +6,7 @@ import { JobListComponent } from './job-list/job-list.component';
 import { JobSubmitComponent } from './job-submit/job-submit.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { FormsModule } from '@angular/forms';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    RouterModule
   ],
   bootstrap: [AppComponent]
 })

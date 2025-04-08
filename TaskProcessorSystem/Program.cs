@@ -15,8 +15,20 @@ builder.Services.AddHostedService<JobProcessorService>();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAngularApp",
+        builder => builder
+            .WithOrigins("http://localhost:4200") 
+            .AllowAnyMethod()
+            .AllowAnyHeader()
+            .AllowCredentials());
+});
 
 var app = builder.Build();
+
+// And in the middleware pipeline:
+app.UseCors("AllowAngularApp");
 
 // Middleware
 if (app.Environment.IsDevelopment())

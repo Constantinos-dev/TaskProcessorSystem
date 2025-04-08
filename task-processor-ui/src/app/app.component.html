@@ -1,6 +1,29 @@
-<nav style="padding: 10px; background: #1976d2; color: white;">
-  <a routerLink="/" routerLinkActive="active" style="margin-right: 20px; color: white;">Home (Job List)</a>
-  <a routerLink="/submit" routerLinkActive="active" style="color: white;">Submit Job</a>
-</nav>
+<!-- Main App Container -->
+<div class="app-container">
+  <!-- Navigation Header -->
+  <header class="app-header">
+    <nav class="main-nav">
+      <div class="logo">
+        <span>JobTracker</span>
+      </div>
+      <div class="nav-links">
+        <button (click)="navigateTo('/')" class="icon-button">
+          Jobs
+        </button>
+        <button (click)="navigateTo('/submit')" class="icon-button">
+          Submit Job
+        </button>
+      </div>
+    </nav>
+  </header>
 
-<router-outlet></router-outlet>
+  <!-- Main Content Area -->
+  <main class="app-content">
+    <router-outlet></router-outlet>
+  </main>
+
+  <!-- Footer -->
+  <footer class="app-footer">
+    <p>&copy; 2025 JobTracker - All rights reserved</p>
+  </footer>
+</div>

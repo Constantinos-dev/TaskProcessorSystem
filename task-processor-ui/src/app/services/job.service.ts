@@ -19,16 +19,16 @@ export interface Job {
   providedIn: 'root'
 })
 export class JobService {
-  private baseUrl = 'https://localhost:4200/api/jobs';
+  private baseUrl = 'https://localhost:7101';
 
   constructor(private http: HttpClient) { }
 
   submitJob(job: Job): Observable<Job> {
-    return this.http.post<Job>(this.baseUrl, job);
+    return this.http.post<Job>(`${this.baseUrl}/jobs`, job);
   }
 
   getJobs() {
-    return this.http.get(this.baseUrl).pipe(
+    return this.http.get(`${this.baseUrl}/jobs`).pipe(
       catchError(error => {
         console.error('Error fetching jobs:', error);
         return throwError('An error occurred while retrieving jobs. Please try again later.');

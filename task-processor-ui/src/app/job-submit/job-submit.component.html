@@ -1,10 +1,12 @@
-<h2>Submit Job</h2>
-<form (ngSubmit)="submitJob()">
-  <label>Type:</label><br />
-  <input [(ngModel)]="jobType" name="jobType" required /><br /><br />
-
-  <label>Payload (JSON):</label><br />
-  <textarea [(ngModel)]="payload" name="payload" rows="5" cols="40" required></textarea><br /><br />
-
-  <button type="submit">Submit</button>
-</form>
+<div>
+  <h2>Submit Job</h2>
+  <form (ngSubmit)="submitJob()">
+    <label>Type:</label><br />
+    <input [(ngModel)]="jobType" name="jobType" required /><br /><br />
+  
+    <label>Payload (JSON):</label><br />
+    <textarea [(ngModel)]="payload" name="payload" rows="5" cols="40" required></textarea><br /><br />
+  
+    <button type="submit">Submit</button>
+  </form>  
+</div>
